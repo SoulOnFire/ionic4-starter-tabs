@@ -3,19 +3,19 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "iov4": {
+    "ionic4-starter-tabs": {
       "root": "",
       "sourceRoot": "src",
-      "projectType": "application",
+      "projectType": "ionic-angular",
       "prefix": "app",
       "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/iov4",
+            "outputPath": "dist/ionic4-starter-tabs",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "main": "src/app/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
@@ -23,7 +23,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/theme/variables.scss"
             ],
             "scripts": []
           },
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "iov4:build"
+            "browserTarget": "ionic4-starter-tabs:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "iov4:build:production"
+              "browserTarget": "ionic4-starter-tabs:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "iov4:build"
+            "browserTarget": "ionic4-starter-tabs:build"
           }
         },
         "test": {
@@ -95,7 +95,7 @@
         }
       }
     },
-    "iov4-e2e": {
+    "ionic4-starter-tabs-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "iov4:serve"
+            "devServerTarget": "ionic4-starter-tabs:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "iov4:serve:production"
+              "devServerTarget": "ionic4-starter-tabs:serve:production"
             }
           }
         },
@@ -123,5 +123,5 @@
       }
     }
   },
-  "defaultProject": "iov4"
+  "defaultProject": "ionic4-starter-tabs"
 }
