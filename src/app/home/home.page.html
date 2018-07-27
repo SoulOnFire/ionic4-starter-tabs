@@ -1,0 +1,17 @@
+<ion-header >
+  <ion-toolbar color="primary">
+    <ion-title>Notícias</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let item of news | async">
+    <img *ngIf="item.enclosure.link" [src]="item.enclosure.link">
+    <ion-card-content>
+      <ion-card-title>{{item.title}}</ion-card-title>
+      <!--<ion-card-subtitle [innerHTML]="item.description | safe:'html'"></ion-card-subtitle>-->
+
+      <p [innerHTML]="item.content | safe:'html'"></p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
