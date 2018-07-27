@@ -1,29 +1,43 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "./node_modules/@angular-devkit/core/src/workspace/workspace-schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "defaultProject": "app",
   "projects": {
-    "ionic4-starter-tabs": {
+    "app": {
       "root": "",
       "sourceRoot": "src",
-      "projectType": "ionic-angular",
+      "projectType": "application",
       "prefix": "app",
       "schematics": {},
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ionic4-starter-tabs",
+            "progress": false,
+            "outputPath": "www",
             "index": "src/index.html",
-            "main": "src/app/main.ts",
+            "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "**/*.svg",
+                "input": "node_modules/@ionic/angular/dist/ionic/svg",
+                "output": "./svg"
+              }
             ],
             "styles": [
-              "src/theme/variables.scss"
+              {
+                "input": "src/theme/variables.scss"
+              },
+              {
+                "input": "src/global.scss"
+              }
             ],
             "scripts": []
           },
@@ -50,18 +64,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ionic4-starter-tabs:build"
+            "browserTarget": "app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ionic4-starter-tabs:build:production"
+              "browserTarget": "app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ionic4-starter-tabs:build"
+            "browserTarget": "app:build"
           }
         },
         "test": {
@@ -72,12 +86,20 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css"
+              "styles.css"
             ],
             "scripts": [],
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              {
+                "glob": "favicon.ico",
+                "input": "src/",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              }
             ]
           }
         },
@@ -92,10 +114,34 @@
               "**/node_modules/**"
             ]
           }
+        },
+        "ionic-cordova-build": {
+          "builder": "@ionic/ng-toolkit:cordova-build",
+          "options": {
+            "browserTarget": "app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "app:build:production"
+            }
+          }
+        },
+        "ionic-cordova-serve": {
+          "builder": "@ionic/ng-toolkit:cordova-serve",
+          "options": {
+            "cordovaBuildTarget": "app:ionic-cordova-build",
+            "devServerTarget": "app:serve"
+          },
+          "configurations": {
+            "production": {
+              "cordovaBuildTarget": "app:ionic-cordova-build:production",
+              "devServerTarget": "app:serve:production"
+            }
+          }
         }
       }
     },
-    "ionic4-starter-tabs-e2e": {
+    "app-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,12 +149,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ionic4-starter-tabs:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "ionic4-starter-tabs:serve:production"
-            }
+            "devServerTarget": "app:serve"
           }
         },
         "lint": {
@@ -123,5 +164,15 @@
       }
     }
   },
-  "defaultProject": "ionic4-starter-tabs"
+  "cli": {
+    "defaultCollection": "@ionic/schematics-angular"
+  },
+  "schematics": {
+    "@ionic/schematics-angular:component": {
+      "styleext": "scss"
+    },
+    "@ionic/schematics-angular:page": {
+      "styleext": "scss"
+    }
+  }
 }
